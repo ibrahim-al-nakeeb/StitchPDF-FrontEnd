@@ -2,12 +2,14 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import './style.css'
 
-export default function GlassyCard({ children }) {
+const GlassyCard = ({ children }) => {
     return (
         <Box className={'glass'}>
             {children}
         </Box>
 
     );
-}
+};
+
+export default GlassyCard;
 
