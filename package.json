@@ -16,6 +16,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
+    "i": "^0.3.7",
     "js-base64": "^3.7.5",
     "pdfjs-dist": "^3.4.120",
     "pspdfkit": "^2023.3.1",
