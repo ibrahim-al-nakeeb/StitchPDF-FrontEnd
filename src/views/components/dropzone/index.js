@@ -18,12 +18,11 @@ const style = {
 
 export default function Dropzone({ handler }) {
     const onDrop = useCallback((acceptedFiles) => {
-        acceptedFiles.forEach((file) => {
-            if ( handler )
-                handler(file);
-        });
-
+        if (handler && acceptedFiles.length > 0) {
+            handler(acceptedFiles);
+        }
     }, [handler]);
+
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
         maxFiles: 5,
