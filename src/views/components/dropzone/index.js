@@ -16,7 +16,7 @@ const style = {
 
 }
 
-export default function Dropzone({ handler }) {
+const Dropzone = ({ handler }) => {
     const onDrop = useCallback((acceptedFiles) => {
         if (handler && acceptedFiles.length > 0) {
             handler(acceptedFiles);
@@ -39,4 +39,6 @@ export default function Dropzone({ handler }) {
             <h3>Drag 'n' drop some files here, or click to select files</h3>
         </Box>
     );
-}
+};
+
+export default Dropzone;
