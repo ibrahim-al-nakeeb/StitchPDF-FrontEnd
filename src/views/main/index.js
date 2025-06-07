@@ -247,38 +247,18 @@ export default function Main() {
     return(
         <Box className={'main'}>
             <GlassyCard>
-                <Box className={'container'}>
-                    <Dropzone handler={handleFileUpload}/>
-                    <DragDropContext onDragEnd={handleDragEnd}>
-                        <Droppable droppableId="droppable-files" sx={{ width: "100%" }}>
-                            {(provided, _) => (
-                                <Box ref={provided.innerRef} {...provided.droppableProps}>
-                                    {pdfFiles.map((pdfFile, index) => (
-                                        <Draggable
-                                            key={index}
-                                            draggableId={`item-${index}`}
-                                            index={index}
-                                        >
-                                            {(provided, _) => (
-                                                <Box ref={provided.innerRef} {...provided.draggableProps}>
-                                                    <Item
-                                                        file={pdfFile}
-                                                        index={index}
-                                                        deleteHandler={handleFileDelete}
-                                                        openFileHandler={handleDocumentPreview}
-                                                        dragHandleProps={provided.dragHandleProps}
-                                                    />
-                                                </Box>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </Box>
-                            )}
-                        </Droppable>
-                    </DragDropContext>
-                </Box>
-                <Box sx={{ m: 1, position: 'relative' }}>
+                <DraggablePdfUploader
+                    pdfFiles={pdfFiles}
+                    setPdfFiles={setPdfFiles}
+                    onUploadError={(errors) => {
+                        showAlert(errors.map(err => err).join('\n'));
+                    }}
+                    handleDocumentPreview={(index) => {
+                        setCurrentDocument(pdfFiles[index]);
+                        setOpenViewer(true);
+                    }}
+                />
+                <Box sx={{ m: 1, position: 'relative' , mb: 3}}>
                     <Button
                         variant="contained"
                         sx={buttonSx}
