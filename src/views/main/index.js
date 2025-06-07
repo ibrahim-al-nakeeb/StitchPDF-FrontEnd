@@ -17,6 +17,8 @@ import ErrorDialog from '../components/ErrorDialog';
 import FullScreenPdfDialog from '../components/FullScreenPdfDialog';
 import DraggablePdfUploader from '../components/DraggablePdfUploader';
 
+import { createSessionMetadataFile } from './helpers';
+
 import { 
     useGenerateGroupID,
     useDownloadMergedPdf,
