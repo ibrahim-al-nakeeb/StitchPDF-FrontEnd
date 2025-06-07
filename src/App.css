@@ -72,3 +72,12 @@
   border: 1px solid #71c4f748;
   margin: 20px;
 }
+
+@media only screen and (max-width: 460px) {
+  .glass {
+    width: 100%;
+    background: none;
+    border: none;
+    backdrop-filter: none;
+  }
+}
