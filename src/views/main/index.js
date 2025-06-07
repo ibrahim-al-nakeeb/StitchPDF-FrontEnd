@@ -283,45 +283,20 @@ export default function Main() {
                     )}
                 </Box>
             </GlassyCard>
-            <Dialog
-                open={open}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={handleClose}
-                aria-describedby="alert-dialog-slide-description"
-                fullScreen
-            >
-                <DialogContent sx={{ padding: 0, height: "95vh", position: "relative"}}>
-                    { openDocument ?
-                        <PdfViewer document={openDocument.document}/>
-                        :
-                        <></>
-                    }
-                </DialogContent>
-                <DialogActions sx={{ height: "5vh"}}>
-                    <Button onClick={handleClose}>Close</Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog
-                open={errorDialog}
-                onClose={handleCloseErrorDialog}
-                aria-labelledby="draggable-dialog-title"
-            >
-                <DialogTitle style={{ cursor: 'move' , color: 'red'}} id="draggable-dialog-title">
-                    {errorStatus}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {errorMsg}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseErrorDialog}>Close</Button>
-                </DialogActions>
-            </Dialog>
-            <Snackbar open={errorAlert} autoHideDuration={6000} onClose={handleSnackbarClose}>
-                <Alert severity="error" variant="filled" onClose={handleSnackbarClose} sx={{ width: '100%' }}>
-                    {errorMsg}
+            <FullScreenPdfDialog
+                open={openViewer}
+                onClose={() => {
+                    URL.revokeObjectURL(currentDocument);
+                    setOpenViewer(false);
+                }}
+                document={currentDocument}
+            />
+            <ErrorDialog
+                open={openErrorDialog}
+                onClose={() => setOpenErrorDialog(false)}
+                title={statusError}
+                message={errorMessage}
+            />
                 </Alert>
             </Snackbar>
         </Box>
