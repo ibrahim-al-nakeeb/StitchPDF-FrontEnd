@@ -25,20 +25,21 @@ import {
 
 
 export default function Main() {
-
-    const [errorDialog, setErrorDialog] = useState(false);
-    const [errorStatus, setErrorStatus] = useState(null);
-    const [openDocument, setOpenDocument] = useState(null);
+    const [groupId, setGroupId] = useState(null);
     const [pdfFiles, setPdfFiles] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [errorAlert, setErrorAlert] = useState(false);
-    const [errorMsg, setErrorMsg] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [openViewer, setOpenViewer] = useState(false);
     const [downloaded, setDownloaded] = useState(false);
-    const [tag, setTag] = useState(null);
+    const [statusError, setStatusError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [openErrorDialog, setOpenErrorDialog] = useState(false);
+    const [currentDocument, setCurrentDocument] = useState(null);
 
-
+    const { generateGroupID } = useGenerateGroupID();
+    const { downloadMergedPdf } = useDownloadMergedPdf();
+    const { uploadFile } = useUploadFile();
 
     const buttonSx = {
         ...(success && {
