@@ -8,7 +8,7 @@ import {
     Slide
 } from '@mui/material';
 
-import PdfViewer from '../pdfviewer';
+import PdfViewer from '../PdfViewer';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props}/>;
