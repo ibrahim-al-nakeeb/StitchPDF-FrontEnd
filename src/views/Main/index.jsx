@@ -118,14 +118,6 @@ const Main = () => {
         }
     };
 
-    const buttonSx = {
-		...(success && {
-			bgcolor: green[500],
-			'&:hover': {
-				bgcolor: green[700],
-			},
-		}),
-	};
 
     return(
         <Box className={'main'}>
@@ -144,7 +136,7 @@ const Main = () => {
                 <Box sx={{ m: 1, position: 'relative' , mb: 3}}>
                     <Button
                         variant="contained"
-                        sx={buttonSx}
+                        className={success ? 'button-success' : ''}
                         disabled={loading}
                         onClick={handleButtonClick}
                         startIcon={ success ? <DownloadIcon/> : downloaded ? <RefreshIcon/> : <MergeIcon/>}

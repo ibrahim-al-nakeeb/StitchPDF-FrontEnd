@@ -51,6 +51,14 @@
   padding: 30px;
 }
 
+.button-success {
+  background-color: #4caf50 !important; /* green[500] */
+}
+
+.button-success:hover {
+  background-color: #388e3c !important; /* green[700] */
+}
+
 @media only screen and (max-width: 460px) {
   .container {
     width: calc(100% - 40px);
