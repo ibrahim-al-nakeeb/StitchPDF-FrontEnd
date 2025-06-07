@@ -10,7 +10,6 @@ import GlassyCard from "../components/GlassyCard";
 import MergeIcon from '@mui/icons-material/Merge';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DownloadIcon from '@mui/icons-material/Download';
-import './style.css';
 import { green } from "@mui/material/colors";
 
 import ErrorDialog from '../components/ErrorDialog';

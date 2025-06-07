@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+
+/* MAIN VIEW */
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 460px) {
+  .container {
+    width: calc(100% - 40px);
+    padding: 20px;
+  }
+}
+
+/* GLASSY CARD COMPONENT */
+.glass {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 70%;
+  height: 90%;
+  background: linear-gradient(126.6deg, rgba(255, 255, 255, 0.12) 28.69%, rgba(255, 255, 255, 0) 100%);
+  border-radius: 25px;
+  border: 1px solid #71c4f748;
+  margin: 20px;
+}
