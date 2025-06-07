@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import Dropzone from '../dropzone';
+import Dropzone from '../Dropzone';
 import Item from '../item';
 
 const DraggablePdfUploader = ({
