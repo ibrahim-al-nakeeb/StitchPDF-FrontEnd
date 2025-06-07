@@ -43,208 +43,90 @@ export default function Main() {
     const { downloadMergedPdf } = useDownloadMergedPdf();
     const { uploadFile } = useUploadFile();
 
-    const buttonSx = {
-        ...(success && {
-            bgcolor: green[500],
-            '&:hover': {
-                bgcolor: green[700],
-            },
-        }),
+    const handleError = (error) => {
+        setErrorMessage(error.message);
+        setStatusError(error.code);
+        setSuccess(false);
+        setLoading(false);
+        setOpenErrorDialog(true);
     };
 
-    const config = {...configFormat};
 
-    useEffect(() => {
-        generateTag();
-    }, []);
-
-
-    const handleClickOpenErrorDialog = () => {
-        setErrorDialog(true);
+    const handleReset = () => {
+        setDownloaded(false);
+        setPdfFiles([]);
     };
 
-    const handleCloseErrorDialog = () => {
-        setErrorDialog(false);
-    };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleSnackbarClose = () => {
-        setErrorAlert(false);
-    };
-
-    const showAlert = (msg) => {
-        setErrorMsg(msg);
-        setErrorAlert(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleDragEnd = (param) => {
-        const srcI = param.source?.index;
-        const destI = param.destination?.index;
-
-        // Check if the drag and drop event has valid source and destination indices
-        if (srcI !== undefined && destI !== undefined) {
-            // Create a copy of the pdfFiles array
-            const updatedPdfFiles = [...pdfFiles];
-            // Remove the item from the source index
-            const [removedItem] = updatedPdfFiles.splice(srcI, 1);
-            // Insert the removed item at the destination index
-            updatedPdfFiles.splice(destI, 0, removedItem);
-            // Update the state with the new array order
-            setPdfFiles(updatedPdfFiles);
+    const handleDownload = async () => {
+        setDownloaded(true);
+        setSuccess(false);
+        try {
+            await downloadMergedPdf(groupId);
+        } catch (error) {
+            handleError(error);
         }
     };
 
-    const generateTag = () => {
-        const length = 30; // desired length of the tag
-        const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let newTag = '';
+    const handleUploadAndTriggerMerge = async () => {
+        setSuccess(false);
+        setLoading(true);
 
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * charset.length);
-            newTag += charset[randomIndex];
-        }
-        console.log(newTag);
-        setTag(newTag);
-    };
-
-
-    const handleFileUpload = (pdfFile) => {
-
-        const maxSize = 10 * 1024 * 1024; // 5 MB in bytes
-        if (pdfFile.size > maxSize) {
-            showAlert("File size exceeds the limit of 10MB");
+        if (pdfFiles.length < 2) {
+            showAlert('You need to select 2 files or more.');
+            setLoading(false);
             return;
         }
 
-        const fileReader = new FileReader();
+        try {
+            const newGroupId = await generateGroupID();
+            setGroupId(newGroupId);
 
-        fileReader.onload = () => {
-            const dataUrl = fileReader.result;
-
-            setPdfFiles((prevPdfFiles) => {
-                if (prevPdfFiles.length >= 5) {
-                    showAlert("You can't select more than 5 files");
-                    return [...prevPdfFiles];
-                } else if (prevPdfFiles.some((file) => file.document === dataUrl)) {
-                    showAlert("The file is already selected");
-                    return [...prevPdfFiles];
-                } else
-                    return [
-                        ...prevPdfFiles,
-                        {
-                            name: pdfFile.name,
-                            type: pdfFile.type,
-                            document: dataUrl,
-                            file: pdfFile
-                        },
-                    ];
-            });
-        };
-        fileReader.readAsDataURL(pdfFile);
-    };
-
-
-    const handleFileDelete = (index) => {
-        setPdfFiles((prevPdfFiles) => prevPdfFiles.filter((_, i) => i !== index));
-    };
-
-    const handleDocumentPreview = (index) => {
-        setOpenDocument(pdfFiles[index]);
-        handleClickOpen();
-    };
-
-
-    const uploadFiles = async () => {
-        for (const pdfFile of pdfFiles) {
-            const index = pdfFiles.indexOf(pdfFile);
-            config.url = `https://pynikv8l73.execute-api.eu-west-1.amazonaws.com/dev/merge-wizard-pdf-preprocess-files/${tag}${index}.${pdfFile.type.split("/")[1]}`;
-            config.headers["Content-Type"] = `${pdfFile.type}`;
-            config.data = pdfFile.file;
-            try {
-               await axios.request(config);
-            } catch (error) {
-                setErrorMsg(error.message);
-                setErrorStatus(error.code);
-                setSuccess(false);
+            if (!newGroupId) {
                 setLoading(false);
-                handleClickOpenErrorDialog();
-            }
-        }
-    }
-
-    const handleButtonClick = async () => {
-
-        if (downloaded) {
-            setDownloaded(false);
-            setPdfFiles([]);
-        } else if (success && !downloaded) {
-            setDownloaded(true);
-            setSuccess(false);
-            try {
-                const response = await axios(`https://pynikv8l73.execute-api.eu-west-1.amazonaws.com/dev/merged-pdf?tag=${tag}`, {headers: {
-                        'X-Api-Key': process.env.REACT_APP_SECRET_KEY
-                    }});
-                const data = response?.data?.body;
-                const presignURL = JSON.parse(data).presigned_url;
-                const link = document.createElement('a');
-                link.href = presignURL;
-                link.target = "_blank";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-            } catch (error) {
-                setErrorMsg(error.message);
-                setErrorStatus(error.code);
-                setSuccess(false);
-                setLoading(false);
-                handleClickOpenErrorDialog();
-            }
-            generateTag();
-        } else if (!loading) {
-            setSuccess(false);
-            setLoading(true);
-
-            if(pdfFiles.length < 2) {
-                setTimeout(() => {
-                    showAlert("You need to select 2 files or more.");
-                    setSuccess(false);
-                    setLoading(false);
-                }, 400);
                 return;
             }
-            config.headers.tag = `session_tag=${tag}`;
-            await uploadFiles();
 
-            config.url = `https://pynikv8l73.execute-api.eu-west-1.amazonaws.com/dev/merge-wizard-pdf-preprocess-files/${tag}.csv`;
-            config.headers["Content-Type"] = 'text/csv';
-            const csvContent = `session_tag\n${tag}`;
-            const csvBlob = new Blob([csvContent]);
-            config.data = new File([csvBlob], `${tag}.csv`, {type: "text/csv"});
-            try {
-                await axios.request(config);
-                setSuccess(true);
-                setLoading(false);
-            } catch (error) {
-                setErrorMsg(error.message);
-                setErrorStatus(error.code);
-                setSuccess(false);
-                setLoading(false);
-                handleClickOpenErrorDialog();
+            for (const file of pdfFiles) {
+                const success = await uploadFile(file, newGroupId);
+                if (!success) throw new Error("Failed to upload one of the PDF files");
             }
 
+            const sessionFile = createSessionMetadataFile(newGroupId);
+            const metaSuccess = await uploadFile(sessionFile, newGroupId);
+            if (!metaSuccess) throw new Error("Failed to upload session metadata file");
+
+            setSuccess(true);
+        } catch (error) {
+            console.error(error);
+            handleError(error);
+        } finally {
+            setLoading(false);
         }
-
-
     };
 
+    const showAlert = (message) => {
+        setErrorMessage(message);
+        setOpenAlert(true);
+    };
+
+    const handleButtonClick = async () => {
+        if (downloaded) {
+            handleReset();
+        } else if (success && !downloaded) {
+            await handleDownload();
+        } else if (!loading) {
+            await handleUploadAndTriggerMerge();
+        }
+    };
+
+    const buttonSx = {
+		...(success && {
+			bgcolor: green[500],
+			'&:hover': {
+				bgcolor: green[700],
+			},
+		}),
+	};
 
     return(
         <Box className={'main'}>
