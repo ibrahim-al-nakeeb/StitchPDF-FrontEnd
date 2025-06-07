@@ -25,7 +25,7 @@ import {
 } from '../../hooks';
 
 
-export default function Main() {
+const Main = () => {
     const [groupId, setGroupId] = useState(null);
     const [pdfFiles, setPdfFiles] = useState([]);
     const [success, setSuccess] = useState(false);
@@ -188,3 +188,5 @@ export default function Main() {
         </Box>
     );
 }
+
+export default Main;
