@@ -4,8 +4,7 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-export default function Item({ file, index, deleteHandler, openFileHandler, dragHandleProps }) {
-
+const Item = ({ file, index, deleteHandler, openFileHandler, dragHandleProps }) => {
     const [fileName, setFileName] = useState('');
 
     useEffect(() => {
@@ -46,3 +45,5 @@ export default function Item({ file, index, deleteHandler, openFileHandler, drag
         </Box>
     );
 }
+
+export default Item;
