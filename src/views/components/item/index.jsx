@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Box, IconButton, Typography} from "@mui/material";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import DeleteIcon from '@mui/icons-material/Delete';
-import './style.css'
 
 
 export default function Item({ file, index, deleteHandler, openFileHandler, dragHandleProps }) {
