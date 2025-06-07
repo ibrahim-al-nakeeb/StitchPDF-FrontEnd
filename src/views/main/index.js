@@ -297,6 +297,9 @@ export default function Main() {
                 title={statusError}
                 message={errorMessage}
             />
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
+                <Alert severity="error" variant="filled" onClose={() => setOpenAlert(false)} sx={{ width: '100%' }}>
+                    {errorMessage}
                 </Alert>
             </Snackbar>
         </Box>
