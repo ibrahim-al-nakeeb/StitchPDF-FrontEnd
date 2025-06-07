@@ -28,7 +28,7 @@ import {
 const Main = () => {
     const [groupId, setGroupId] = useState(null);
     const [pdfFiles, setPdfFiles] = useState([]);
-    const [success, setSuccess] = useState(false);
+    const [mergeSuccess, setMergeSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
     const [openViewer, setOpenViewer] = useState(false);
@@ -45,7 +45,7 @@ const Main = () => {
     const handleError = (error) => {
         setErrorMessage(error.message);
         setStatusError(error.code);
-        setSuccess(false);
+        setMergeSuccess(false);
         setLoading(false);
         setOpenErrorDialog(true);
     };
@@ -58,7 +58,7 @@ const Main = () => {
 
     const handleDownload = async () => {
         setDownloaded(true);
-        setSuccess(false);
+        setMergeSuccess(false);
         try {
             await downloadMergedPdf(groupId);
         } catch (error) {
@@ -67,7 +67,7 @@ const Main = () => {
     };
 
     const handleUploadAndTriggerMerge = async () => {
-        setSuccess(false);
+        setMergeSuccess(false);
         setLoading(true);
 
         if (pdfFiles.length < 2) {
@@ -94,7 +94,7 @@ const Main = () => {
             const metaSuccess = await uploadFile(sessionFile, newGroupId);
             if (!metaSuccess) throw new Error("Failed to upload session metadata file");
 
-            setSuccess(true);
+            setMergeSuccess(true);
         } catch (error) {
             console.error(error);
             handleError(error);
@@ -111,7 +111,7 @@ const Main = () => {
     const handleButtonClick = async () => {
         if (downloaded) {
             handleReset();
-        } else if (success && !downloaded) {
+        } else if (mergeSuccess && !downloaded) {
             await handleDownload();
         } else if (!loading) {
             await handleUploadAndTriggerMerge();
@@ -136,12 +136,12 @@ const Main = () => {
                 <Box sx={{ m: 1, position: 'relative' , mb: 3}}>
                     <Button
                         variant="contained"
-                        className={success ? 'button-success' : ''}
+                        className={mergeSuccess ? 'button-success' : ''}
                         disabled={loading}
                         onClick={handleButtonClick}
-                        startIcon={ success ? <DownloadIcon/> : downloaded ? <RefreshIcon/> : <MergeIcon/>}
+                        startIcon={ mergeSuccess ? <DownloadIcon/> : downloaded ? <RefreshIcon/> : <MergeIcon/>}
                     >
-                        {success ? "Download" : downloaded ? "Refresh" : "Merge"}
+                        {mergeSuccess ? "Download" : downloaded ? "Refresh" : "Merge"}
                     </Button>
                     {loading && (
                         <CircularProgress
