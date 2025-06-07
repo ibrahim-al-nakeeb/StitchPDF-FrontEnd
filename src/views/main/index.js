@@ -1,35 +1,27 @@
-import React, {forwardRef, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     Alert,
     Box,
     Button,
     CircularProgress,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Slide,
     Snackbar
 } from "@mui/material";
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import GlassyCard from "../components/glassycard";
-import Dropzone from "../components/dropzone";
+import GlassyCard from "../components/GlassyCard";
 import MergeIcon from '@mui/icons-material/Merge';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DownloadIcon from '@mui/icons-material/Download';
-import Item from "../components/item";
-import PdfViewer from "../components/pdfviewer";
-import axios from "axios";
 import './style.css';
 import {green} from "@mui/material/colors";
-import {configFormat} from "../config";
 
+import ErrorDialog from '../components/ErrorDialog';
+import FullScreenPdfDialog from '../components/FullScreenPdfDialog';
+import DraggablePdfUploader from '../components/DraggablePdfUploader';
 
-const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props}/>;
-});
-
+import { 
+    useGenerateGroupID,
+    useDownloadMergedPdf,
+    useUploadFile
+} from '../../hooks';
 
 
 export default function Main() {
