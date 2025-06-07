@@ -27,7 +27,7 @@ const FullScreenPdfDialog = ({ open, onClose, document }) => {
             <DialogContent
                 sx={{ padding: 0, height: "95vh", position: "relative" }}
             >
-                {document ? <PdfViewer document={document} /> : null}
+                {document && <PdfViewer document={document} />}
             </DialogContent>
             <DialogActions sx={{ height: "5vh" }}>
                 <Button onClick={onClose}>Close</Button>
