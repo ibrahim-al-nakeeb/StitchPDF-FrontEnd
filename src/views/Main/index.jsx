@@ -44,7 +44,7 @@ const Main = () => {
 
     const handleError = (error) => {
         setErrorMessage(error.message);
-        setStatusError(error.code);
+        setStatusError(error.status);
         setMergeSuccess(false);
         setLoading(false);
         setOpenErrorDialog(true);
