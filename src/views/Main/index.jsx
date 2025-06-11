@@ -169,7 +169,7 @@ const Main = () => {
             <ErrorDialog
                 open={openErrorDialog}
                 onClose={() => setOpenErrorDialog(false)}
-                title={statusError}
+                title={`Something went wrong${statusError ? ` (Error ${statusError})` : ''}`}
                 message={errorMessage}
             />
             <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
