@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const useGenerateGroupID = () => {
+const useGenerateGroupID = () => {
     const generateGroupID = async () => {
         try {
             const response = await axios.get(
@@ -28,3 +28,5 @@ export const useGenerateGroupID = () => {
         generateGroupID,
     };
 };
+
+export default useGenerateGroupID;
