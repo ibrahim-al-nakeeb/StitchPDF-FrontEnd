@@ -10,13 +10,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to bottom, #191970, #202082, #272794, #2e2ea7, #3535ba, #4442c5, #524fd1, #5f5cdc, #7471e1, #8886e6, #9b9aea, #afafed);
+  background-image: linear-gradient(to right, #2c6cbc, #347cc8, #3f8cd4, #4c9ddf, #5bade9, #77b7ee, #8ec2f4, #a4cdf9, #c1d5f9, #d7dff8, #e9eaf6, #f6f6f6);
   height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
 
 #root {
