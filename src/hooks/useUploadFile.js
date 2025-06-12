@@ -19,21 +19,18 @@ const useUploadFile = () => {
                 }
             );
 
-        if (!response.ok) throw new Error(`Failed to get signed URL: ${response.statusText}`);
-
-        const { uploadUrl } = await response.json();
-
-        const uploadRes = await fetch(uploadUrl, {
-            method: 'PUT',
-            body: file,
-            headers: {
-                'Content-Type': file.type
+            const { presigned_url } = await response.data;
+            
+            if (!presigned_url) {
+                throw new Error("No signed URL returned by the server");
             }
-        });
 
-        if (!uploadRes.ok) throw new Error(`Upload failed: ${uploadRes.statusText}`);
-
-        return true;
+            await axios.put(presigned_url, file, {
+                headers: {
+                    'Content-Type': file.type
+                }
+            });
+            return true;
     };
 
     return {
