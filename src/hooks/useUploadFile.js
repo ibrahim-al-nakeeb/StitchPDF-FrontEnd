@@ -1,13 +1,23 @@
+import axios from 'axios';
+
+
 const useUploadFile = () => {
     const uploadFile = async (file, groupId) => {
-        const filename = encodeURIComponent(file.name);
-
-        const signUrl = `${process.env.REACT_APP_UPLOAD_SIGN_URL}/upload-url?filename=${filename}&tag=groupId=${groupId}`;
-        const response = await fetch(signUrl, {
-            headers: {
-                'X-Api-Key': process.env.REACT_APP_API_KEY
+        try {
+            if (!file || !groupId) {
+                console.error("Missing file or groupId");
+                throw new Error("Missing required parameters");
             }
-        });
+
+            const filename = `${groupId}/${file.name}`;
+            const response = await axios.get(
+                `${process.env.REACT_APP_API_URL}/upload-url`, {
+                    params: { filename },
+                    headers: {
+                        'X-Api-Key': process.env.REACT_APP_API_KEY
+                    }
+                }
+            );
 
         if (!response.ok) throw new Error(`Failed to get signed URL: ${response.statusText}`);
 
