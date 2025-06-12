@@ -9,6 +9,8 @@ const useDownloadMergedPdf = () => {
                 }
             }
         );
+        
+        const { presigned_url } = await response.data;
 
         const link = document.createElement('a');
         link.href = presignURL;
