@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const useDownloadMergedPdf = () => {
+const useDownloadMergedPdf = () => {
     const downloadMergedPdf = async (groupId) => {
         const response = await axios.get(
             `${process.env.REACT_APP_GET_MERGED_URL}/download-url?groupId=${groupId}`,
@@ -19,3 +19,5 @@ export const useDownloadMergedPdf = () => {
 
     return { downloadMergedPdf };
 };
+
+export default useDownloadMergedPdf;
