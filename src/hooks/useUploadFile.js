@@ -1,4 +1,4 @@
-export const useUploadFile = () => {
+const useUploadFile = () => {
     const uploadFile = async (file, groupId) => {
         const filename = encodeURIComponent(file.name);
 
@@ -30,3 +30,5 @@ export const useUploadFile = () => {
         uploadFile
     };
 };
+
+export default useUploadFile;
