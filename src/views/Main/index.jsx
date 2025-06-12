@@ -80,10 +80,6 @@ const Main = () => {
             const newGroupId = await generateGroupID();
             setGroupId(newGroupId);
 
-            if (!newGroupId) {
-                setLoading(false);
-                return;
-            }
 
             for (const file of pdfFiles) {
                 const success = await uploadFile(file, newGroupId);
