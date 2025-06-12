@@ -31,6 +31,17 @@ const useUploadFile = () => {
                 }
             });
             return true;
+
+        } catch (error) {            
+            const message = error.response?.data?.errorMessage || error.message || 'Unknown error';
+            const status = error.response?.status;
+
+            const customError = new Error(message);
+            customError.status = status;
+
+            console.error("Error in uploadFile:", message);
+            throw customError;
+        }
     };
 
     return {
