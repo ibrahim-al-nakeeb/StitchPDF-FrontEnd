@@ -3,14 +3,12 @@ import {
     Alert,
     Box,
     Button,
-    CircularProgress,
     Snackbar
 } from "@mui/material";
 import GlassyCard from "../components/GlassyCard";
 import MergeIcon from '@mui/icons-material/Merge';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DownloadIcon from '@mui/icons-material/Download';
-import { green } from "@mui/material/colors";
 
 import ErrorDialog from '../components/ErrorDialog';
 import FullScreenPdfDialog from '../components/FullScreenPdfDialog';
@@ -133,25 +131,13 @@ const Main = () => {
                     <Button
                         variant="contained"
                         className={mergeSuccess ? 'button-success' : ''}
-                        disabled={loading}
                         onClick={handleButtonClick}
                         startIcon={ mergeSuccess ? <DownloadIcon/> : downloaded ? <RefreshIcon/> : <MergeIcon/>}
+                        loading={loading}
+                        loadingPosition="start"
                     >
                         {mergeSuccess ? "Download" : downloaded ? "Refresh" : "Merge"}
                     </Button>
-                    {loading && (
-                        <CircularProgress
-                            size={24}
-                            sx={{
-                                color: green[500],
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                marginTop: '-12px',
-                                marginLeft: '-12px',
-                            }}
-                        />
-                    )}
                 </Box>
             </GlassyCard>
             <FullScreenPdfDialog
