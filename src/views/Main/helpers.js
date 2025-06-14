@@ -3,7 +3,7 @@ export const createSessionMetadataFile = (groupId) => {
         [JSON.stringify({ groupId: groupId }, null, 2)],
         { type: 'application/json' }
     );
-    const file = new File([jsonBlob], `${groupId}.json`, {
+    const file = new File([jsonBlob], `trigger.json`, {
         type: 'application/json'
     });
     return file;
