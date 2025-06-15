@@ -81,7 +81,7 @@ const DraggablePdfUploader = ({
                         <Box
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            sx={{ width: "100%" }}
+                            sx={{ width: "100%", mt: 3 }}
                         >
                             {pdfFiles.map((pdfFile, index) => (
                                 <Draggable
