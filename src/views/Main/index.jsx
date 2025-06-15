@@ -55,12 +55,15 @@ const Main = () => {
     };
 
     const handleDownload = async () => {
-        setDownloaded(true);
-        setMergeSuccess(false);
+        setLoading(true);
         try {
             await downloadMergedPdf(groupId);
+            setDownloaded(true);
+            setMergeSuccess(false);
         } catch (error) {
             handleError(error);
+        } finally {
+            setLoading(false);
         }
     };
 
