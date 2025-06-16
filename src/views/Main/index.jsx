@@ -143,13 +143,13 @@ const Main = () => {
                 <Box sx={{ m: 1, position: 'relative' , mb: 3}}>
                     <Button
                         variant="contained"
-                        className={mergeSuccess ? 'button-success' : ''}
+                        className={stage === Stage.READY_TO_DOWNLOAD ? 'button-success' : ''}
                         onClick={handleButtonClick}
-                        startIcon={ mergeSuccess ? <DownloadIcon/> : downloaded ? <RefreshIcon/> : <MergeIcon/>}
+                        startIcon={getStartIcon()}
                         loading={loading}
                         loadingPosition="start"
                     >
-                        {mergeSuccess ? "Download" : downloaded ? "Refresh" : "Merge"}
+                        {stage}
                     </Button>
                 </Box>
             </GlassyCard>
