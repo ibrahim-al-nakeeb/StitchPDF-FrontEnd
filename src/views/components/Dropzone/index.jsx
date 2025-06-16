@@ -36,7 +36,7 @@ const Dropzone = ({ handler }) => {
         <Box {...getRootProps()} sx={style}>
             <input {...getInputProps()} />
             <CloudUploadIcon sx={{fontSize: '80px'}}/>
-            <h3>Drag 'n' drop some files here, or click to select files</h3>
+            <h3>Drag and drop your PDF files here, or click to select and stitch them</h3>
         </Box>
     );
 };
