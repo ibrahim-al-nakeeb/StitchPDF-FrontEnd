@@ -3,6 +3,9 @@ import { Box } from '@mui/material';
 import { Worker, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
 const PdfViewer = ({ document }) => {
     const layoutPlugin = defaultLayoutPlugin();
     const [objectUrl, setObjectUrl] = useState(null);
