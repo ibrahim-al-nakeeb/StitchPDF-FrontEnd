@@ -18,6 +18,10 @@ const useDownloadMergedPdf = () => {
 
             const { presigned_url } = await response.data;
 
+            if(!presigned_url) {
+                throw new Error(response.data?.errorMessage || response.data?.message)
+            }
+
             const link = document.createElement('a');
             link.href = presigned_url;
             link.target = '_blank';
