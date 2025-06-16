@@ -119,6 +119,12 @@ const Main = () => {
         }
     };
 
+    const getStartIcon = () => {
+        if (stage === Stage.READY_TO_DOWNLOAD || stage === Stage.DOWNLOADING) return <DownloadIcon />;
+        if (stage === Stage.READY_TO_REFRESH) return <RefreshIcon />;
+        if (stage === Stage.UPLOADING) return <FileUploadIcon />;
+        return <MergeIcon />;
+    };
 
     return(
         <Box className={'main'}>
