@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     Alert,
     Box,
@@ -80,7 +80,6 @@ const Main = () => {
         try {
             const newGroupId = await generateGroupID();
             setGroupId(newGroupId);
-
 
             for (const file of pdfFiles) {
                 const success = await uploadFile(file, newGroupId);
