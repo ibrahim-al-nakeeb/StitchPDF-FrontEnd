@@ -29,15 +29,14 @@ import {
 const Main = () => {
     const [groupId, setGroupId] = useState(null);
     const [pdfFiles, setPdfFiles] = useState([]);
-    const [mergeSuccess, setMergeSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
     const [openViewer, setOpenViewer] = useState(false);
-    const [downloaded, setDownloaded] = useState(false);
     const [statusError, setStatusError] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [openErrorDialog, setOpenErrorDialog] = useState(false);
     const [currentDocument, setCurrentDocument] = useState(null);
+    const [stage, setStage] = useState(Stage.READY_TO_MERGE);
 
     const { generateGroupID } = useGenerateGroupID();
     const { downloadMergedPdf } = useDownloadMergedPdf();
@@ -46,24 +45,23 @@ const Main = () => {
     const handleError = (error) => {
         setErrorMessage(error.message);
         setStatusError(error.status);
-        setMergeSuccess(false);
         setLoading(false);
         setOpenErrorDialog(true);
     };
 
-
     const handleReset = () => {
-        setDownloaded(false);
         setPdfFiles([]);
+        setStage(Stage.READY_TO_MERGE);
     };
 
     const handleDownload = async () => {
         setLoading(true);
+        setStage(Stage.DOWNLOADING);
         try {
             await downloadMergedPdf(groupId);
-            setDownloaded(true);
-            setMergeSuccess(false);
+            setStage(Stage.READY_TO_REFRESH);
         } catch (error) {
+            setStage(Stage.READY_TO_DOWNLOAD);
             handleError(error);
         } finally {
             setLoading(false);
@@ -71,7 +69,6 @@ const Main = () => {
     };
 
     const handleUploadAndTriggerMerge = async () => {
-        setMergeSuccess(false);
         setLoading(true);
 
         if (pdfFiles.length < 2) {
@@ -81,6 +78,7 @@ const Main = () => {
         }
 
         try {
+            setStage(Stage.UPLOADING);
             const newGroupId = await generateGroupID();
             setGroupId(newGroupId);
 
@@ -92,9 +90,13 @@ const Main = () => {
             const sessionFile = createSessionMetadataFile(newGroupId);
             const metaSuccess = await uploadFile(sessionFile, newGroupId);
             if (!metaSuccess) throw new Error("Failed to upload session metadata file");
+            setStage(Stage.MERGING);
 
-            setMergeSuccess(true);
+            await sleep(2000);
+
+            setStage(Stage.READY_TO_DOWNLOAD);
         } catch (error) {
+            setStage(Stage.READY_TO_MERGE);
             console.error(error);
             handleError(error);
         } finally {
@@ -108,11 +110,11 @@ const Main = () => {
     };
 
     const handleButtonClick = async () => {
-        if (downloaded) {
+        if (stage === Stage.READY_TO_REFRESH) {
             handleReset();
-        } else if (mergeSuccess && !downloaded) {
+        } else if (stage === Stage.READY_TO_DOWNLOAD) {
             await handleDownload();
-        } else if (!loading) {
+        } else if (stage === Stage.READY_TO_MERGE) {
             await handleUploadAndTriggerMerge();
         }
     };
