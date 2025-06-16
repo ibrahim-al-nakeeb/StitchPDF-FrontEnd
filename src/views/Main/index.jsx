@@ -17,6 +17,8 @@ import DraggablePdfUploader from '../components/DraggablePdfUploader';
 
 import { sleep, createSessionMetadataFile } from '../../utils';
 
+import { Stage } from '../../constants';
+
 import { 
     useGenerateGroupID,
     useDownloadMergedPdf,
