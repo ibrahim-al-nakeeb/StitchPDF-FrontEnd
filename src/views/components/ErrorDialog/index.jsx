@@ -9,7 +9,7 @@ import {
     Button
 } from '@mui/material';
 
-const ErrorDialog = ({ open, onClose, title, message }) => {
+const ErrorDialog = ({ open, onClose,onRestart, title, message }) => {
     return (
         <Dialog
             open={open}
@@ -26,6 +26,7 @@ const ErrorDialog = ({ open, onClose, title, message }) => {
                 <DialogContentText>{message}</DialogContentText>
             </DialogContent>
             <DialogActions>
+                <Button onClick={onRestart}>Restart</Button>
                 <Button onClick={onClose}>Close</Button>
             </DialogActions>
         </Dialog>

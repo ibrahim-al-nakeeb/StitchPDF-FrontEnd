@@ -164,6 +164,10 @@ const Main = () => {
             <ErrorDialog
                 open={openErrorDialog}
                 onClose={() => setOpenErrorDialog(false)}
+                onRestart={() => {
+                    handleReset();
+                    setOpenErrorDialog(false);
+                }}
                 title={`Something went wrong${statusError ? ` (Error ${statusError})` : ''}`}
                 message={errorMessage}
             />
