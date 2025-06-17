@@ -25,14 +25,14 @@ const style = {
 
 }
 
-const Dropzone = ({ handler }) => {
+const Dropzone = ({ handler, disabled }) => {
     const onDrop = useCallback((acceptedFiles) => {
         if (handler && acceptedFiles.length > 0) {
             handler(acceptedFiles);
         }
     }, [handler]);
 
-    const { getRootProps, getInputProps } = useDropzone({
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         maxFiles: 5,
         accept: {
@@ -42,10 +42,23 @@ const Dropzone = ({ handler }) => {
     });
 
     return (
-        <Box {...getRootProps()} sx={style}>
-            <input {...getInputProps()} />
+        <Box
+            {...getRootProps()}
+            sx={style}
+            className={disabled ? 'disabled' : ''}
+        >
+            <input {...getInputProps({ disabled })}/>
             <CloudUploadIcon sx={{fontSize: '80px'}}/>
-            <h3>Drag and drop your PDF files here, or click to select and stitch them</h3>
+            <h3>
+                {isDragActive && !disabled ? 
+                    'Drop the files here...'
+                :
+                disabled ?
+                    ''
+                :
+                    'Drag and drop your PDF files here, or click to select and stitch them'
+                }
+            </h3>
         </Box>
     );
 };
