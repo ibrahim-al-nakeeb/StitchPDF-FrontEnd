@@ -9,9 +9,18 @@ const style = {
     padding: '30px',
     textAlign: 'center',
     borderRadius: '20px',
+    height: '15dvh',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
     '&:hover' : {
         opacity: 0.8,
         cursor: "pointer"
+    },
+    '&.disabled': {
+        opacity: 0.5,
+        cursor: 'not-allowed',
     }
 
 }
