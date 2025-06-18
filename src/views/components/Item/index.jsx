@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, IconButton, Typography} from "@mui/material";
+import {Box, IconButton, Typography, Stack} from "@mui/material";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -28,10 +28,19 @@ const Item = ({ file, index, deleteHandler, openFileHandler, dragHandleProps }) 
             className={`file-card ${disabled ? 'disabled' : ''}`}
             {...dragHandleProps}
         >
-            <DragIndicatorIcon/>
-            <Typography gutterBottom className={'file-name'} onClick={handleClick}>
-                {fileName}
-            </Typography>
+            <Stack
+                direction="row"
+                spacing={4}
+                sx={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <DragIndicatorIcon/>
+                <Typography gutterBottom className={'file-name'} onClick={handleClick} sx={{ m:0 }}>
+                    {fileName}
+                </Typography>
+            </Stack>
             <IconButton color={'inherit'} aria-label="add to shopping cart" onClick={handleItemDelete}>
                 <DeleteIcon />
             </IconButton>
