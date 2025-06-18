@@ -4,7 +4,14 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-const Item = ({ file, index, deleteHandler, openFileHandler, dragHandleProps }) => {
+const Item = ({
+    file,
+    index,
+    deleteHandler,
+    openFileHandler,
+    dragHandleProps,
+    disabled 
+}) => {
     const [fileName, setFileName] = useState('');
 
     useEffect(() => {
@@ -37,11 +44,11 @@ const Item = ({ file, index, deleteHandler, openFileHandler, dragHandleProps }) 
                 }}
             >
                 <DragIndicatorIcon/>
-                <Typography gutterBottom className={'file-name'} onClick={handleClick} sx={{ m:0 }}>
+                <Typography gutterBottom className={'file-name' + disabled ? ' disabled' : ''} onClick={handleClick} sx={{ m:0 }}>
                     {fileName}
                 </Typography>
             </Stack>
-            <IconButton color={'inherit'} aria-label="add to shopping cart" onClick={handleItemDelete}>
+            <IconButton color={'inherit'} aria-label="add to shopping cart" onClick={handleItemDelete} disabled={disabled}>
                 <DeleteIcon />
             </IconButton>
         </Box>
