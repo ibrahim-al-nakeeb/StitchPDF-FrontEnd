@@ -139,6 +139,7 @@ const Main = () => {
                         setCurrentDocument(pdfFiles[index]);
                         setOpenViewer(true);
                     }}
+                    disabled={stage !== Stage.READY_TO_MERGE}
                 />
                 <Box sx={{ m: 1, position: 'relative' , mb: 3}}>
                     <Button
