@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Box, IconButton, Typography, Stack} from "@mui/material";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 
 const Item = ({
@@ -49,7 +49,7 @@ const Item = ({
                 </Typography>
             </Stack>
             <IconButton color={'inherit'} aria-label="add to shopping cart" onClick={handleItemDelete} disabled={disabled}>
-                <DeleteIcon />
+                <RemoveCircleIcon />
             </IconButton>
         </Box>
     );
