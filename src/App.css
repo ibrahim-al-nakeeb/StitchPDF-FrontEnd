@@ -106,6 +106,10 @@
     cursor: pointer;
 }
 
+.file-card.disabled {
+  opacity: 0.6;
+}
+
 /* DROPZONE */
 .dropzone {
   color: white;

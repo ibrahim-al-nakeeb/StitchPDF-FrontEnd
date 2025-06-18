@@ -25,14 +25,7 @@ const Item = ({ file, index, deleteHandler, openFileHandler, dragHandleProps }) 
 
     return (
         <Box
-            sx={{
-                display: 'flex',
-                width: '100%',
-                padding: '5px',
-                color: 'white',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-            }}
+            className={`file-card ${disabled ? 'disabled' : ''}`}
             {...dragHandleProps}
         >
             <DragIndicatorIcon/>
