@@ -8,7 +8,8 @@ const DraggablePdfUploader = ({
     pdfFiles,
     setPdfFiles,
     onUploadError,
-    handleDocumentPreview
+    handleDocumentPreview,
+    disabled
 }) => {
     const handleDragEnd = (param) => {
         const srcI = param.source?.index;
@@ -79,7 +80,7 @@ const DraggablePdfUploader = ({
                 md: '70%'
             }}}
         >
-
+            <Dropzone handler={handleFileUpload} disabled={disabled} />
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="droppable-files">
                     {(provided) => (
@@ -93,6 +94,7 @@ const DraggablePdfUploader = ({
                                     key={index}
                                     draggableId={`item-${index}`}
                                     index={index}
+                                    isDragDisabled={disabled}
                                 >
                                     {(provided) => (
                                         <Box
@@ -105,6 +107,7 @@ const DraggablePdfUploader = ({
                                                 deleteHandler={handleFileDelete}
                                                 openFileHandler={handleDocumentPreview}
                                                 dragHandleProps={provided.dragHandleProps}
+                                                disabled={disabled}
                                             />
                                         </Box>
                                     )}
