@@ -72,8 +72,13 @@ const DraggablePdfUploader = ({
     };
 
     return (
-        <Box className="container">
-            <Dropzone handler={handleFileUpload} />
+        <Box className="container" sx={
+            { width: {
+                xs: '95%',
+                sm: '95%',
+                md: '70%'
+            }}}
+        >
 
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="droppable-files">
