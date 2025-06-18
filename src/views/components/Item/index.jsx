@@ -14,7 +14,7 @@ const Item = ({ file, index, deleteHandler, openFileHandler, dragHandleProps }) 
 
 
     const handleItemDelete = () => {
-        if ( deleteHandler )
+        if (deleteHandler)
             deleteHandler(index);
     }
 
