@@ -16,18 +16,32 @@ const useDownloadMergedPdf = () => {
                 }
             );
 
-            const { presigned_url } = await response.data;
+            const status = response.status;
 
-            if(!presigned_url) {
-                throw new Error(response.data?.errorMessage || response.data?.message)
+            if (status === 200) {
+                const { presigned_url } = response.data;
+
+                if (!presigned_url) {
+                    throw new Error(response.data?.errorMessage || "Missing download URL");
+                }
+
+                const link = document.createElement('a');
+                link.href = presigned_url;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                return { success: true };
             }
 
-            const link = document.createElement('a');
-            link.href = presigned_url;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            if (status === 202 || status === 400 || status === 404) {
+                const message = response.data?.errorMessage || response.data?.message || "Request not fulfilled";
+                const error = new Error(message);
+                error.status = status;
+                throw error;
+            }
+
+            throw new Error("Unexpected server response");
 
         } catch (error) {            
             const message = error.response?.data?.errorMessage || error.message || 'Unknown error';
