@@ -55,14 +55,23 @@ const Main = () => {
     };
 
     const handleDownload = async () => {
-        setLoading(true);
-        setStage(Stage.DOWNLOADING);
-        try {
-            await downloadMergedPdf(groupId);
-            setStage(Stage.READY_TO_REFRESH);
+    setLoading(true);
+    setStage(Stage.DOWNLOADING);
+
+    try {
+        await downloadMergedPdf(groupId);
+        setStage(Stage.READY_TO_REFRESH);
         } catch (error) {
-            setStage(Stage.READY_TO_DOWNLOAD);
-            handleError(error);
+            if (error.status === 202) {
+                showAlert(error.message);
+            } else {
+                handleError(error);
+            }
+            if (error.status === 400) {
+                setStage(Stage.READY_TO_REFRESH);
+            } else {
+                setStage(Stage.READY_TO_DOWNLOAD);
+            }
         } finally {
             setLoading(false);
         }
